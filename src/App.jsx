@@ -1,6 +1,8 @@
 import HeroScrollAnimation from './HeroScrollAnimation'
 import Navbar from './Navbar'
 import Contact from './Contact'
+import Languages from './Languages'
+import AboutVisual from './AboutVisual'
 import SectionWrapper from './SectionWrapper'
 
 function App() {
@@ -10,14 +12,22 @@ function App() {
             <Navbar />
             <HeroScrollAnimation />
 
-            <main className="content-section relative z-10 bg-zinc-900 shadow-xl -mt-20 pt-24 px-6 md:px-20 max-w-7xl mx-auto rounded-t-3xl min-h-screen">
+            {/* Card 1: About & Projects */}
+            <main className="content-section relative z-10 bg-zinc-900 shadow-xl -mt-20 pt-24 pb-32 px-6 md:px-20 max-w-7xl mx-auto rounded-t-3xl rounded-b-3xl mb-12">
 
                 {/* About Section */}
                 <SectionWrapper id="about" className="mb-20">
                     <h2 className="text-4xl md:text-5xl font-bold text-white mb-8 border-b border-zinc-700 pb-4" style={{ fontFamily: '"Saira Stencil One", sans-serif' }}>
                         About Me
                     </h2>
-                    <div className="grid md:grid-cols-3 gap-8">
+                    <div className="grid md:grid-cols-3 gap-8 items-center">
+
+                        {/* Visual Column (Left) */}
+                        <div className="hidden md:block md:col-span-1 h-full">
+                            <AboutVisual />
+                        </div>
+
+                        {/* Text Column (Right) */}
                         <div className="md:col-span-2 space-y-6 text-lg text-gray-300 font-light leading-relaxed">
                             <p>
                                 I’m an MCA student with a strong passion for Machine Learning and Full-Stack Development. I enjoy building intelligent, data-driven applications that solve real-world problems using modern technologies and thoughtful design.
@@ -28,17 +38,13 @@ function App() {
                             <p>
                                 Alongside technical expertise, I bring strong communication, adaptability, and analytical thinking skills developed through academic projects and professional experience. I’m constantly learning and exploring new technologies to grow as a developer and problem solver.
                             </p>
+                        </div>
 
-                        </div>
-                        {/* You could add a profile image or visual element here in the 3rd column if desired */}
-                        <div className="hidden md:flex items-center justify-center bg-zinc-800/50 rounded-2xl p-8 border border-zinc-700/50">
-                            <span className="text-zinc-600 text-6xl font-black opacity-20">DEV</span>
-                        </div>
                     </div>
                 </SectionWrapper>
 
                 {/* Projects Section */}
-                <SectionWrapper id="projects" className="mb-20">
+                <SectionWrapper id="projects" className="mb-8">
                     <h2 className="text-4xl md:text-5xl font-bold text-white mb-12 border-b border-zinc-700 pb-4" style={{ fontFamily: '"Saira Stencil One", sans-serif' }}>
                         Projects
                     </h2>
@@ -74,16 +80,31 @@ function App() {
 
                     </div>
                 </SectionWrapper>
+            </main>
 
-                {/* Contact Section */}
-                <SectionWrapper id="contact" className="mb-20">
+            {/* Card 2: Languages Section */}
+            <div className="relative z-10 bg-zinc-900/80 backdrop-blur-md shadow-2xl mx-auto max-w-7xl rounded-3xl p-8 md:p-12 mb-12 border border-zinc-800">
+                <SectionWrapper
+                    id="skills"
+                    className="w-full"
+                    variants={{
+                        hidden: { opacity: 0, scale: 0.8 },
+                        visible: { opacity: 1, scale: 1 }
+                    }}
+                >
+                    <Languages />
+                </SectionWrapper>
+            </div>
+
+            {/* Card 3: Contact Section */}
+            <div className="relative z-10 bg-zinc-900 shadow-xl max-w-7xl mx-auto rounded-3xl p-8 md:p-12 mb-10">
+                <SectionWrapper id="contact" className="w-full">
                     <Contact />
                 </SectionWrapper>
-
-                <div className="h-[20vh] border-t border-zinc-800 flex items-center justify-center text-zinc-600">
+                <div className="h-[10vh] border-t border-zinc-800 flex items-center justify-center text-zinc-600 mt-12">
                     <p>© {new Date().getFullYear()} Nithin Mathew Thomas. All rights reserved.</p>
                 </div>
-            </main>
+            </div>
         </div>
     )
 }
