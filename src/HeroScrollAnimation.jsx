@@ -125,8 +125,9 @@ const HeroScrollAnimation = () => {
                 }}
             >
                 <div className="w-full md:w-1/2 h-full flex flex-col justify-center px-6 md:pl-20 items-center md:items-start text-center md:text-left">
-                    <h1 className="text-6xl md:text-8xl font-bold tracking-tight bg-gradient-to-r from-gray-800 via-slate-900 to-black bg-clip-text text-transparent leading-none uppercase mb-4" style={{ fontFamily: '"Saira Stencil One", sans-serif' }}>
-                        Nithin<br />Mathew Thomas
+                    <h1 className="text-6xl md:text-8xl font-bold tracking-tight leading-none uppercase mb-4">
+                        <span className="block text-4xl md:text-6xl text-white mb-2 normal-case" style={{ fontFamily: '"Saira", sans-serif' }}>Hi I am,</span>
+                        <span className="bg-gradient-to-r from-orange-100 via-amber-100 to-yellow-200 bg-clip-text text-transparent" style={{ fontFamily: '"Outfit", sans-serif', fontWeight: 700 }}>Nithin Mathew Thomas</span>
                     </h1>
                     <p className="text-xl md:text-2xl font-light text-white/90 tracking-wide">
                         Frontend Developer & Designer
