@@ -50,7 +50,7 @@ function App() {
                         <div className="grid grid-cols-2 gap-6">
                             <div className="bg-zinc-900/50 p-6 rounded-2xl border border-zinc-800 hover:border-green-500/50 transition-all duration-300 group">
                                 <Rocket className="w-8 h-8 text-green-400 mb-4 group-hover:scale-110 transition-transform" />
-                                <h3 className="text-3xl font-bold text-white mb-1">1+</h3>
+                                <h3 className="text-3xl font-bold text-white mb-1">1</h3>
                                 <p className="text-sm text-gray-500 font-medium uppercase tracking-wide">Years Experience</p>
                             </div>
                             <div className="bg-zinc-900/50 p-6 rounded-2xl border border-zinc-800 hover:border-green-500/50 transition-all duration-300 group">
@@ -74,7 +74,7 @@ function App() {
 
                 {/* Work Experience Section */}
                 <SectionWrapper id="work">
-                    
+
                     <WorkExperience />
                 </SectionWrapper>
 
@@ -97,7 +97,7 @@ function App() {
                             <div className="absolute inset-0 bg-gradient-to-t from-green-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                             <div className="p-8 h-full flex flex-col relative z-10">
                                 <div className="mb-6 flex justify-between items-start">
-                                    <h3 className="text-2xl font-bold text-white group-hover:text-green-400 transition-colors">Helio</h3>
+                                    <h3 className="text-2xl font-bold text-white group-hover:text-green-400 transition-colors">Helio: Smart Diet Planner</h3>
                                     <span className="bg-zinc-800 text-xs text-green-400 px-3 py-1 rounded-full border border-zinc-700">ML/AI</span>
                                 </div>
                                 <p className="text-gray-400 mb-6 flex-grow leading-relaxed text-sm">
@@ -118,7 +118,7 @@ function App() {
                             <div className="absolute inset-0 bg-gradient-to-t from-green-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                             <div className="p-8 h-full flex flex-col relative z-10">
                                 <div className="mb-6 flex justify-between items-start">
-                                    <h3 className="text-2xl font-bold text-white group-hover:text-green-400 transition-colors">Audio Validator</h3>
+                                    <h3 className="text-2xl font-bold text-white group-hover:text-green-400 transition-colors">Smart Audio Validator</h3>
                                     <span className="bg-zinc-800 text-xs text-green-400 px-3 py-1 rounded-full border border-zinc-700">AI/DSP</span>
                                 </div>
                                 <p className="text-gray-400 mb-6 flex-grow leading-relaxed text-sm">
@@ -139,7 +139,7 @@ function App() {
                             <div className="absolute inset-0 bg-gradient-to-t from-green-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                             <div className="p-8 h-full flex flex-col relative z-10">
                                 <div className="mb-6 flex justify-between items-start">
-                                    <h3 className="text-2xl font-bold text-white group-hover:text-green-400 transition-colors">FitShop</h3>
+                                    <h3 className="text-2xl font-bold text-white group-hover:text-green-400 transition-colors">Fitness Equipments Shop</h3>
                                     <span className="bg-zinc-800 text-xs text-green-400 px-3 py-1 rounded-full border border-zinc-700">Web</span>
                                 </div>
                                 <p className="text-gray-400 mb-6 flex-grow leading-relaxed text-sm">
