@@ -11,15 +11,19 @@ const Navbar = () => {
             const scrollValues = window.scrollY;
             setScrolled(scrollValues > 50);
 
-            // Scroll Spy Logic
-            const sections = ['home', 'about', 'work', 'projects', 'contact'];
+            // If the About section hasn't scrolled into view yet, we're in the Hero / Home zone
+            const aboutEl = document.getElementById('about');
+            if (!aboutEl || aboutEl.getBoundingClientRect().top > window.innerHeight * 0.5) {
+                setActiveSection('home');
+                return;
+            }
 
-            // Check scroll position to determine active section
+            // Scroll Spy for real content sections
+            const sections = ['about', 'work', 'projects', 'skills', 'contact'];
             for (const section of sections) {
                 const element = document.getElementById(section);
                 if (element) {
                     const rect = element.getBoundingClientRect();
-                    // If the section is in the viewport (with some offset)
                     if (rect.top <= 150 && rect.bottom >= 150) {
                         setActiveSection(section);
                         break;

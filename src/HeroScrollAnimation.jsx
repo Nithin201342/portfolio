@@ -71,7 +71,7 @@ const HeroScrollAnimation = () => {
                 x = (canvas.width / 2) - (img.width / 2) * scale;
             }
 
-            const y = (canvas.height / 2) - (img.height / 2) * scale + (canvas.height * 0.07); // Shift down by 7%
+            const y = canvas.height * 0.08; // Top of cube at 8% from top (matches text paddingTop: 8vh)
 
             context.clearRect(0, 0, canvas.width, canvas.height);
             context.drawImage(img, x, y, img.width * scale, img.height * scale);
@@ -117,6 +117,8 @@ const HeroScrollAnimation = () => {
     return (
         <div ref={containerRef} className="relative h-[300vh] bg-[#6F7C74]">
             <canvas ref={canvasRef} className="sticky top-0 left-0 w-full h-screen object-cover z-0" style={{ filter: 'brightness(1.03)', mixBlendMode: 'lighten' }} />
+            {/* Gradient fade from hero olive to white at the bottom of the hero scroll area */}
+            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '35vh', background: 'linear-gradient(to bottom, transparent, #ffffff)', zIndex: 5, pointerEvents: 'none' }} />
             <div
                 className="fixed top-0 left-0 w-full h-screen z-10 pointer-events-none"
                 style={{
@@ -124,14 +126,41 @@ const HeroScrollAnimation = () => {
                     transform: `translateY(${textTranslateY}px)`
                 }}
             >
-                <div className="w-full md:w-1/2 h-full flex flex-col justify-center px-6 md:pl-20 items-center md:items-start text-center md:text-left">
-                    <h1 className="text-6xl md:text-8xl font-bold tracking-tight leading-none uppercase mb-4">
-                        <span className="block text-4xl md:text-6xl text-white mb-2 normal-case" style={{ fontFamily: '"Saira", sans-serif' }}>Hi I am,</span>
-                        <span className="bg-gradient-to-r from-orange-100 via-amber-100 to-yellow-200 bg-clip-text text-transparent" style={{ fontFamily: '"Outfit", sans-serif', fontWeight: 700 }}>Nithin Mathew Thomas</span>
-                    </h1>
-                    <p className="text-xl md:text-2xl font-light text-white/90 tracking-wide">
-                        Frontend Developer & Designer
+                <div className="w-full md:w-1/2 h-full flex flex-col justify-start px-6 md:pl-20 items-center md:items-start text-center md:text-left" style={{ paddingTop: '16vh' }}>
+                    {/* "Hi I am," greeting */}
+                    <p
+                        style={{
+                            fontFamily: '"Saira", sans-serif',
+                            fontWeight: 500,
+                            fontStyle: 'italic',
+                            fontSize: 'clamp(0.85rem, 1.6vw, 1.2rem)',
+                            color: '#e8ddb5',
+                            margin: 0,
+                            padding: 0,
+                            lineHeight: 1,
+                            letterSpacing: '0.02em',
+                        }}
+                    >
+                        Hi I am,
                     </p>
+
+                    {/* Name — each word on its own line, huge block letters */}
+                    <h1
+                        style={{
+                            fontFamily: '"Barlow Condensed", sans-serif',
+                            fontWeight: 900,
+                            fontSize: 'clamp(4.5rem, 14vw, 11rem)',
+                            lineHeight: 0.92,
+                            letterSpacing: '-0.01em',
+                            textTransform: 'uppercase',
+                            color: '#e8ddb5',
+                            margin: 0,
+                        }}
+                    >
+                        <span style={{ display: 'block' }}>Nithin</span>
+                        <span style={{ display: 'block' }}>Mathew</span>
+                        <span style={{ display: 'block' }}>Thomas</span>
+                    </h1>
                 </div>
             </div>
         </div>

@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion'
 import HeroScrollAnimation from './HeroScrollAnimation'
 import Navbar from './Navbar'
 import Contact from './Contact'
@@ -9,64 +10,81 @@ import { Rocket, Trophy, Code, Award } from 'lucide-react'
 function App() {
 
     return (
-        <div className="bg-black min-h-screen selection:bg-green-500/30 selection:text-green-200">
+        <div className="min-h-screen" style={{ backgroundColor: '#ffffff', color: '#828A7F' }}>
             <Navbar />
             <HeroScrollAnimation />
 
             {/* Main Content Container without Glass Wrappers */}
-            <main className="relative z-10 -mt-20 pb-32 px-6 md:px-20 max-w-7xl mx-auto space-y-24">
+            <main className="relative z-10 -mt-20 pb-32 px-6 md:px-20 max-w-7xl mx-auto space-y-24" style={{ color: '#828A7F' }}>
 
                 {/* About Section - "Crafting Digital Experiences" */}
                 <SectionWrapper id="about" className="pt-20">
-                    <div className="text-center mb-16 mt-15">
-                        <span className="text-green-400 font-mono text-sm tracking-wider uppercase bg-green-400/10 px-3 py-1 rounded-full border border-green-400/20">
-                            About Me
-                        </span>
-                        <h2 className="text-4xl md:text-5xl font-bold text-white mt-6 mb-4 leading-tight" style={{ fontFamily: '"Saira Stencil One", sans-serif' }}>
-                            Crafting Digital <br /> <span className="text-green-400">Experiences</span>
-                        </h2>
-                    </div>
-
-                    <div className="grid md:grid-cols-2 gap-16 items-start">
-                        {/* Left: Text Content */}
-                        <div className="space-y-6 text-lg text-gray-400 font-light leading-relaxed">
-                            <p>
-                                I’m an MCA student with a strong passion for <span className="text-white font-medium">Machine Learning</span> and <span className="text-white font-medium">Full-Stack Development</span>.
-                                I enjoy building intelligent, data-driven applications that solve real-world problems using modern technologies and thoughtful design.
-                            </p>
-                            <p>
-                                My work focuses on combining AI, data analysis, and web development to create practical and impactful solutions. I love transforming complex technical challenges into simple, user-friendly experiences.
-                            </p>
-                            <div className="pt-8">
-                                <div className="p-6 bg-zinc-900/50 rounded-2xl border-l-4 border-green-500">
-                                    <p className="italic text-gray-300">
-                                        "Constantly learning and exploring new technologies to grow as a developer and problem solver."
+                    {/* Grid background with fade edges */}
+                    <div style={{ position: 'relative', padding: '3rem', borderRadius: '1.5rem', overflow: 'hidden' }}>
+                        <div style={{
+                            position: 'absolute', inset: 0, pointerEvents: 'none',
+                            backgroundImage: 'linear-gradient(rgba(0,0,0,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.07) 1px, transparent 1px)',
+                            backgroundSize: '38px 38px',
+                            maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)',
+                            WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)',
+                            zIndex: 0,
+                        }} />
+                        <div style={{ position: 'relative', zIndex: 1 }}>
+                            <div className="grid md:grid-cols-2 gap-16 items-start">
+                                {/* Left: Text Content — slides in from left */}
+                                <motion.div
+                                    className="space-y-6 text-lg font-light leading-relaxed"
+                                    style={{ color: '#828A7F' }}
+                                    initial={{ x: -80, opacity: 0 }}
+                                    whileInView={{ x: 0, opacity: 1 }}
+                                    transition={{ duration: 0.7, ease: 'easeOut' }}
+                                    viewport={{ once: true, amount: 0.2 }}
+                                >
+                                    <p>
+                                        I'm an MCA student with a strong passion for <span style={{ color: '#6F7C74', fontWeight: 600 }}>Machine Learning</span> and <span style={{ color: '#6F7C74', fontWeight: 600 }}>Full-Stack Development</span>.
+                                        I enjoy building intelligent, data-driven applications that solve real-world problems using modern technologies and thoughtful design.
                                     </p>
-                                </div>
-                            </div>
-                        </div>
+                                    <p>
+                                        My work focuses on combining AI, data analysis, and web development to create practical and impactful solutions. I love transforming complex technical challenges into simple, user-friendly experiences.
+                                    </p>
+                                    <div className="pt-8">
+                                        <div className="p-6 rounded-2xl" style={{ background: 'rgba(130,138,127,0.06)', borderLeft: '4px solid #828A7F' }}>
+                                            <p className="italic" style={{ color: '#828A7F' }}>
+                                                "Constantly learning and exploring new technologies to grow as a developer and problem solver."
+                                            </p>
+                                        </div>
+                                    </div>
+                                </motion.div>
 
-                        {/* Right: Stats Grid */}
-                        <div className="grid grid-cols-2 gap-6">
-                            <div className="bg-zinc-900/50 p-6 rounded-2xl border border-zinc-800 hover:border-green-500/50 transition-all duration-300 group">
-                                <Rocket className="w-8 h-8 text-green-400 mb-4 group-hover:scale-110 transition-transform" />
-                                <h3 className="text-3xl font-bold text-white mb-1">1</h3>
-                                <p className="text-sm text-gray-500 font-medium uppercase tracking-wide">Years Experience</p>
-                            </div>
-                            <div className="bg-zinc-900/50 p-6 rounded-2xl border border-zinc-800 hover:border-green-500/50 transition-all duration-300 group">
-                                <Code className="w-8 h-8 text-green-400 mb-4 group-hover:scale-110 transition-transform" />
-                                <h3 className="text-3xl font-bold text-white mb-1">5+</h3>
-                                <p className="text-sm text-gray-500 font-medium uppercase tracking-wide">Projects Built</p>
-                            </div>
-                            <div className="bg-zinc-900/50 p-6 rounded-2xl border border-zinc-800 hover:border-green-500/50 transition-all duration-300 group">
-                                <Trophy className="w-8 h-8 text-green-400 mb-4 group-hover:scale-110 transition-transform" />
-                                <h3 className="text-3xl font-bold text-white mb-1">3+</h3>
-                                <p className="text-sm text-gray-500 font-medium uppercase tracking-wide">Achivements</p>
-                            </div>
-                            <div className="bg-zinc-900/50 p-6 rounded-2xl border border-zinc-800 hover:border-green-500/50 transition-all duration-300 group">
-                                <Award className="w-8 h-8 text-green-400 mb-4 group-hover:scale-110 transition-transform" />
-                                <h3 className="text-3xl font-bold text-white mb-1">2</h3>
-                                <p className="text-sm text-gray-500 font-medium uppercase tracking-wide">Certifications</p>
+                                {/* Right: Stats Grid — slides in from right */}
+                                <motion.div
+                                    className="grid grid-cols-2 gap-6"
+                                    initial={{ x: 80, opacity: 0 }}
+                                    whileInView={{ x: 0, opacity: 1 }}
+                                    transition={{ duration: 0.7, ease: 'easeOut', delay: 0.1 }}
+                                    viewport={{ once: true, amount: 0.2 }}
+                                >
+                                    <div className="p-6 rounded-2xl transition-all duration-300 group" style={{ background: 'rgba(130,138,127,0.07)', border: '1px solid rgba(130,138,127,0.2)' }}>
+                                        <Rocket className="w-8 h-8 mb-4 group-hover:scale-110 transition-transform" style={{ color: '#828A7F' }} />
+                                        <h3 className="text-3xl font-bold mb-1" style={{ color: '#6F7C74' }}>1</h3>
+                                        <p className="text-sm font-medium uppercase tracking-wide" style={{ color: 'rgba(130,138,127,0.7)' }}>Years Experience</p>
+                                    </div>
+                                    <div className="p-6 rounded-2xl transition-all duration-300 group" style={{ background: 'rgba(130,138,127,0.07)', border: '1px solid rgba(130,138,127,0.2)' }}>
+                                        <Code className="w-8 h-8 mb-4 group-hover:scale-110 transition-transform" style={{ color: '#828A7F' }} />
+                                        <h3 className="text-3xl font-bold mb-1" style={{ color: '#6F7C74' }}>5+</h3>
+                                        <p className="text-sm font-medium uppercase tracking-wide" style={{ color: 'rgba(130,138,127,0.7)' }}>Projects Built</p>
+                                    </div>
+                                    <div className="p-6 rounded-2xl transition-all duration-300 group" style={{ background: 'rgba(130,138,127,0.07)', border: '1px solid rgba(130,138,127,0.2)' }}>
+                                        <Trophy className="w-8 h-8 mb-4 group-hover:scale-110 transition-transform" style={{ color: '#828A7F' }} />
+                                        <h3 className="text-3xl font-bold mb-1" style={{ color: '#6F7C74' }}>3+</h3>
+                                        <p className="text-sm font-medium uppercase tracking-wide" style={{ color: 'rgba(130,138,127,0.7)' }}>Achievements</p>
+                                    </div>
+                                    <div className="p-6 rounded-2xl transition-all duration-300 group" style={{ background: 'rgba(130,138,127,0.07)', border: '1px solid rgba(130,138,127,0.2)' }}>
+                                        <Award className="w-8 h-8 mb-4 group-hover:scale-110 transition-transform" style={{ color: '#828A7F' }} />
+                                        <h3 className="text-3xl font-bold mb-1" style={{ color: '#6F7C74' }}>2</h3>
+                                        <p className="text-sm font-medium uppercase tracking-wide" style={{ color: 'rgba(130,138,127,0.7)' }}>Certifications</p>
+                                    </div>
+                                </motion.div>
                             </div>
                         </div>
                     </div>
@@ -81,76 +99,76 @@ function App() {
                 {/* Projects Section */}
                 <SectionWrapper id="projects">
                     <div className="text-center mb-16">
-                        <span className="text-green-400 font-mono text-sm tracking-wider uppercase bg-green-400/10 px-3 py-1 rounded-full border border-green-400/20">
+                        <span style={{ color: '#828A7F', fontFamily: '"Saira", sans-serif', fontSize: '0.8rem', letterSpacing: '0.12em', textTransform: 'uppercase', background: 'rgba(130,138,127,0.1)', padding: '4px 14px', borderRadius: '999px', border: '1px solid rgba(130,138,127,0.3)' }}>
                             Portfolio
                         </span>
-                        <h2 className="text-4xl md:text-5xl font-bold text-white mt-6 mb-4" style={{ fontFamily: '"Saira Stencil One", sans-serif' }}>
-                            Featured <span className="text-green-400">Projects</span>
+                        <h2 className="text-4xl md:text-6xl font-black mt-6 mb-4 uppercase" style={{ fontFamily: '"Barlow Condensed", sans-serif', fontWeight: 900, color: '#6F7C74' }}>
+                            Featured <span style={{ opacity: 0.5 }}>Projects</span>
                         </h2>
-                        <div className="h-1 w-24 bg-green-500 mx-auto rounded-full"></div>
+                        <div className="h-px w-24 mx-auto rounded-full" style={{ background: '#828A7F', opacity: 0.3 }}></div>
                     </div>
 
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
 
                         {/* Project 1 */}
-                        <div className="group bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden hover:border-green-500/50 transition-all duration-500 hover:shadow-[0_0_30px_rgba(74,222,128,0.1)] relative">
-                            <div className="absolute inset-0 bg-gradient-to-t from-green-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div className="group rounded-3xl overflow-hidden relative transition-all duration-500" style={{ background: 'rgba(130,138,127,0.05)', border: '1px solid rgba(130,138,127,0.2)' }}>
+                            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: 'linear-gradient(to top, rgba(130,138,127,0.07), transparent)' }}></div>
                             <div className="p-8 h-full flex flex-col relative z-10">
                                 <div className="mb-6 flex justify-between items-start">
-                                    <h3 className="text-2xl font-bold text-white group-hover:text-green-400 transition-colors">Helio: Smart Diet Planner</h3>
-                                    <span className="bg-zinc-800 text-xs text-green-400 px-3 py-1 rounded-full border border-zinc-700">ML/AI</span>
+                                    <h3 className="text-2xl font-bold transition-colors" style={{ color: '#6F7C74', fontFamily: '"Barlow Condensed", sans-serif', fontWeight: 700 }}>Helio: Smart Diet Planner</h3>
+                                    <span className="text-xs px-3 py-1 rounded-full" style={{ color: '#828A7F', background: 'rgba(130,138,127,0.1)', border: '1px solid rgba(130,138,127,0.3)' }}>ML/AI</span>
                                 </div>
-                                <p className="text-gray-400 mb-6 flex-grow leading-relaxed text-sm">
+                                <p className="mb-6 flex-grow leading-relaxed text-sm" style={{ color: '#828A7F' }}>
                                     Smart Diet Planner generating personalized diet and exercise plans based on user health data using predictive models.
                                 </p>
                                 <div className="flex flex-wrap gap-2 mb-6">
-                                    <span className="text-xs text-gray-500 bg-zinc-950 px-2 py-1 rounded">Python</span>
-                                    <span className="text-xs text-gray-500 bg-zinc-950 px-2 py-1 rounded">MongoDB</span>
+                                    <span className="text-xs px-2 py-1 rounded" style={{ color: '#828A7F', background: 'rgba(130,138,127,0.08)' }}>Python</span>
+                                    <span className="text-xs px-2 py-1 rounded" style={{ color: '#828A7F', background: 'rgba(130,138,127,0.08)' }}>MongoDB</span>
                                 </div>
-                                <a href="#" className="w-full py-3 rounded-xl bg-zinc-800 text-white font-medium text-center group-hover:bg-green-500 group-hover:text-black transition-all duration-300">
+                                <a href="#" className="w-full py-3 rounded-xl font-medium text-center transition-all duration-300" style={{ background: 'rgba(130,138,127,0.1)', color: '#6F7C74', border: '1px solid rgba(130,138,127,0.3)' }}>
                                     View Project
                                 </a>
                             </div>
                         </div>
 
                         {/* Project 2 */}
-                        <div className="group bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden hover:border-green-500/50 transition-all duration-500 hover:shadow-[0_0_30px_rgba(74,222,128,0.1)] relative">
-                            <div className="absolute inset-0 bg-gradient-to-t from-green-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div className="group rounded-3xl overflow-hidden relative transition-all duration-500" style={{ background: 'rgba(130,138,127,0.05)', border: '1px solid rgba(130,138,127,0.2)' }}>
+                            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: 'linear-gradient(to top, rgba(130,138,127,0.07), transparent)' }}></div>
                             <div className="p-8 h-full flex flex-col relative z-10">
                                 <div className="mb-6 flex justify-between items-start">
-                                    <h3 className="text-2xl font-bold text-white group-hover:text-green-400 transition-colors">Smart Audio Validator</h3>
-                                    <span className="bg-zinc-800 text-xs text-green-400 px-3 py-1 rounded-full border border-zinc-700">AI/DSP</span>
+                                    <h3 className="text-2xl font-bold transition-colors" style={{ color: '#6F7C74', fontFamily: '"Barlow Condensed", sans-serif', fontWeight: 700 }}>Smart Audio Validator</h3>
+                                    <span className="text-xs px-3 py-1 rounded-full" style={{ color: '#828A7F', background: 'rgba(130,138,127,0.1)', border: '1px solid rgba(130,138,127,0.3)' }}>AI/DSP</span>
                                 </div>
-                                <p className="text-gray-400 mb-6 flex-grow leading-relaxed text-sm">
+                                <p className="mb-6 flex-grow leading-relaxed text-sm" style={{ color: '#828A7F' }}>
                                     AI-based system evaluating audio quality using digital signal processing and machine learning to extract advanced features.
                                 </p>
                                 <div className="flex flex-wrap gap-2 mb-6">
-                                    <span className="text-xs text-gray-500 bg-zinc-950 px-2 py-1 rounded">Python</span>
-                                    <span className="text-xs text-gray-500 bg-zinc-950 px-2 py-1 rounded">Librosa</span>
+                                    <span className="text-xs px-2 py-1 rounded" style={{ color: '#828A7F', background: 'rgba(130,138,127,0.08)' }}>Python</span>
+                                    <span className="text-xs px-2 py-1 rounded" style={{ color: '#828A7F', background: 'rgba(130,138,127,0.08)' }}>Librosa</span>
                                 </div>
-                                <a href="#" className="w-full py-3 rounded-xl bg-zinc-800 text-white font-medium text-center group-hover:bg-green-500 group-hover:text-black transition-all duration-300">
+                                <a href="#" className="w-full py-3 rounded-xl font-medium text-center transition-all duration-300" style={{ background: 'rgba(130,138,127,0.1)', color: '#6F7C74', border: '1px solid rgba(130,138,127,0.3)' }}>
                                     View Project
                                 </a>
                             </div>
                         </div>
 
                         {/* Project 3 */}
-                        <div className="group bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden hover:border-green-500/50 transition-all duration-500 hover:shadow-[0_0_30px_rgba(74,222,128,0.1)] relative">
-                            <div className="absolute inset-0 bg-gradient-to-t from-green-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div className="group rounded-3xl overflow-hidden relative transition-all duration-500" style={{ background: 'rgba(130,138,127,0.05)', border: '1px solid rgba(130,138,127,0.2)' }}>
+                            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: 'linear-gradient(to top, rgba(130,138,127,0.07), transparent)' }}></div>
                             <div className="p-8 h-full flex flex-col relative z-10">
                                 <div className="mb-6 flex justify-between items-start">
-                                    <h3 className="text-2xl font-bold text-white group-hover:text-green-400 transition-colors">Fitness Equipments Shop</h3>
-                                    <span className="bg-zinc-800 text-xs text-green-400 px-3 py-1 rounded-full border border-zinc-700">Web</span>
+                                    <h3 className="text-2xl font-bold transition-colors" style={{ color: '#6F7C74', fontFamily: '"Barlow Condensed", sans-serif', fontWeight: 700 }}>Fitness Equipments Shop</h3>
+                                    <span className="text-xs px-3 py-1 rounded-full" style={{ color: '#828A7F', background: 'rgba(130,138,127,0.1)', border: '1px solid rgba(130,138,127,0.3)' }}>Web</span>
                                 </div>
-                                <p className="text-gray-400 mb-6 flex-grow leading-relaxed text-sm">
+                                <p className="mb-6 flex-grow leading-relaxed text-sm" style={{ color: '#828A7F' }}>
                                     Full-stack e-commerce web application for fitness equipment with cart, checkout, and admin panel functionality.
                                 </p>
                                 <div className="flex flex-wrap gap-2 mb-6">
-                                    <span className="text-xs text-gray-500 bg-zinc-950 px-2 py-1 rounded">PHP</span>
-                                    <span className="text-xs text-gray-500 bg-zinc-950 px-2 py-1 rounded">MySQL</span>
-                                    <span className="text-xs text-gray-500 bg-zinc-950 px-2 py-1 rounded">JS</span>
+                                    <span className="text-xs px-2 py-1 rounded" style={{ color: '#828A7F', background: 'rgba(130,138,127,0.08)' }}>PHP</span>
+                                    <span className="text-xs px-2 py-1 rounded" style={{ color: '#828A7F', background: 'rgba(130,138,127,0.08)' }}>MySQL</span>
+                                    <span className="text-xs px-2 py-1 rounded" style={{ color: '#828A7F', background: 'rgba(130,138,127,0.08)' }}>JS</span>
                                 </div>
-                                <a href="#" className="w-full py-3 rounded-xl bg-zinc-800 text-white font-medium text-center group-hover:bg-green-500 group-hover:text-black transition-all duration-300">
+                                <a href="#" className="w-full py-3 rounded-xl font-medium text-center transition-all duration-300" style={{ background: 'rgba(130,138,127,0.1)', color: '#6F7C74', border: '1px solid rgba(130,138,127,0.3)' }}>
                                     View Project
                                 </a>
                             </div>
@@ -175,8 +193,8 @@ function App() {
                 <SectionWrapper id="contact" className="w-full">
                     <Contact />
                 </SectionWrapper>
-                <div className="h-[10vh] border-t border-zinc-800 flex items-center justify-center text-zinc-600 mt-12 pb-8">
-                    <p>© {new Date().getFullYear()} Nithin Mathew Thomas. All rights reserved.</p>
+                <div className="h-[10vh] flex items-center justify-center mt-12 pb-8" style={{ borderTop: '1px solid rgba(130,138,127,0.2)', color: 'rgba(130,138,127,0.5)' }}>
+                    <p>&copy; {new Date().getFullYear()} Nithin Mathew Thomas. All rights reserved.</p>
                 </div>
             </main>
         </div>

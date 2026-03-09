@@ -6,7 +6,8 @@ html {
 
 @layer base {
   body {
-    @apply bg-black text-white;
+    background-color: #ffffff;
+    color: #828A7F;
     font-family: 'Saira', sans-serif;
   }
 }
