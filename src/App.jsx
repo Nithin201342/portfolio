@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import HeroScrollAnimation from './HeroScrollAnimation'
 import Navbar from './Navbar'
@@ -6,6 +6,7 @@ import Contact from './Contact'
 import TechnicalArsenal from './TechnicalArsenal'
 import SectionWrapper from './SectionWrapper'
 import WorkExperience from './WorkExperience'
+import FlickerGrid from './FlickerGrid'
 import { Rocket, Trophy, Code, Award } from 'lucide-react'
 
 function App() {
@@ -29,6 +30,9 @@ function App() {
     const proj2Y = useTransform(projectsProgress, [0, 1], [50, -50]);
     const proj3Y = useTransform(projectsProgress, [0, 1], [30, -30]);
 
+    // Projects hover expand state
+    const [hoveredProject, setHoveredProject] = useState(null);
+
     return (
         <div className="min-h-screen" style={{ backgroundColor: '#ffffff', color: '#828A7F' }}>
             <Navbar />
@@ -41,14 +45,7 @@ function App() {
                 <SectionWrapper id="about" className="pt-20">
                     {/* Grid background with fade edges */}
                     <div style={{ position: 'relative', padding: '3rem', borderRadius: '1.5rem', overflow: 'hidden' }}>
-                        <div style={{
-                            position: 'absolute', inset: 0, pointerEvents: 'none',
-                            backgroundImage: 'linear-gradient(rgba(0,0,0,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.07) 1px, transparent 1px)',
-                            backgroundSize: '38px 38px',
-                            maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)',
-                            WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)',
-                            zIndex: 0,
-                        }} />
+                        <FlickerGrid />
                         <div style={{ position: 'relative', zIndex: 1 }}>
                             <div ref={aboutRef} className="grid md:grid-cols-2 gap-16 items-start">
                                 {/* Left: Text Content — slides in from left, out to left */}
@@ -85,22 +82,22 @@ function App() {
                                     transition={{ duration: 0.65, ease: 'easeOut', delay: 0.1 }}
                                     viewport={{ once: false, amount: 0.25 }}
                                 >
-                                    <div className="p-6 rounded-2xl transition-all duration-300 group" style={{ background: 'rgba(130,138,127,0.07)', border: '1px solid rgba(130,138,127,0.2)' }}>
+                                    <div className="p-6 rounded-2xl transition-all duration-300 group" style={{ background: '#ffffff', border: '1px solid rgba(130,138,127,0.25)', boxShadow: '0 2px 12px rgba(130,138,127,0.1)' }}>
                                         <Rocket className="w-8 h-8 mb-4 group-hover:scale-110 transition-transform" style={{ color: '#828A7F' }} />
                                         <h3 className="text-3xl font-bold mb-1" style={{ color: '#6F7C74' }}>1</h3>
                                         <p className="text-sm font-medium uppercase tracking-wide" style={{ color: 'rgba(130,138,127,0.7)' }}>Years Experience</p>
                                     </div>
-                                    <div className="p-6 rounded-2xl transition-all duration-300 group" style={{ background: 'rgba(130,138,127,0.07)', border: '1px solid rgba(130,138,127,0.2)' }}>
+                                    <div className="p-6 rounded-2xl transition-all duration-300 group" style={{ background: '#ffffff', border: '1px solid rgba(130,138,127,0.25)', boxShadow: '0 2px 12px rgba(130,138,127,0.1)' }}>
                                         <Code className="w-8 h-8 mb-4 group-hover:scale-110 transition-transform" style={{ color: '#828A7F' }} />
                                         <h3 className="text-3xl font-bold mb-1" style={{ color: '#6F7C74' }}>5+</h3>
                                         <p className="text-sm font-medium uppercase tracking-wide" style={{ color: 'rgba(130,138,127,0.7)' }}>Projects Built</p>
                                     </div>
-                                    <div className="p-6 rounded-2xl transition-all duration-300 group" style={{ background: 'rgba(130,138,127,0.07)', border: '1px solid rgba(130,138,127,0.2)' }}>
+                                    <div className="p-6 rounded-2xl transition-all duration-300 group" style={{ background: '#ffffff', border: '1px solid rgba(130,138,127,0.25)', boxShadow: '0 2px 12px rgba(130,138,127,0.1)' }}>
                                         <Trophy className="w-8 h-8 mb-4 group-hover:scale-110 transition-transform" style={{ color: '#828A7F' }} />
                                         <h3 className="text-3xl font-bold mb-1" style={{ color: '#6F7C74' }}>3+</h3>
                                         <p className="text-sm font-medium uppercase tracking-wide" style={{ color: 'rgba(130,138,127,0.7)' }}>Achievements</p>
                                     </div>
-                                    <div className="p-6 rounded-2xl transition-all duration-300 group" style={{ background: 'rgba(130,138,127,0.07)', border: '1px solid rgba(130,138,127,0.2)' }}>
+                                    <div className="p-6 rounded-2xl transition-all duration-300 group" style={{ background: '#ffffff', border: '1px solid rgba(130,138,127,0.25)', boxShadow: '0 2px 12px rgba(130,138,127,0.1)' }}>
                                         <Award className="w-8 h-8 mb-4 group-hover:scale-110 transition-transform" style={{ color: '#828A7F' }} />
                                         <h3 className="text-3xl font-bold mb-1" style={{ color: '#6F7C74' }}>2</h3>
                                         <p className="text-sm font-medium uppercase tracking-wide" style={{ color: 'rgba(130,138,127,0.7)' }}>Certifications</p>
@@ -135,17 +132,22 @@ function App() {
                         <div className="h-px w-24 mx-auto rounded-full" style={{ background: '#828A7F', opacity: 0.3 }}></div>
                     </motion.div>
 
-                    <div ref={projectsRef} className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div ref={projectsRef} className="flex flex-col md:flex-row gap-4 items-stretch">
 
                         {/* Project 1 */}
                         <motion.div
-                            style={{ y: proj1Y }}
+                            style={{
+                                y: proj1Y,
+                                flex: hoveredProject === 0 ? '1.8' : hoveredProject !== null ? '0.7' : '1',
+                                transition: 'flex 0.45s cubic-bezier(0.4,0,0.2,1)',
+                                minWidth: 0, overflow: 'hidden'
+                            }}
                             initial={{ y: 60, opacity: 0 }}
                             whileInView={{ y: 0, opacity: 1 }}
                             transition={{ duration: 0.6, ease: 'easeOut' }}
                             viewport={{ once: false, amount: 0.2 }}
-                            className="group rounded-3xl overflow-hidden relative transition-all duration-500"
-                        // style prop can't have y twice, so merge:
+                            onMouseEnter={() => setHoveredProject(0)}
+                            onMouseLeave={() => setHoveredProject(null)}
                         >
                             <div className="group rounded-3xl overflow-hidden relative transition-all duration-500 h-full" style={{ background: 'rgba(130,138,127,0.05)', border: '1px solid rgba(130,138,127,0.2)' }}>
                                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: 'linear-gradient(to top, rgba(130,138,127,0.07), transparent)' }}></div>
@@ -169,11 +171,18 @@ function App() {
 
                         {/* Project 2 */}
                         <motion.div
-                            style={{ y: proj2Y }}
+                            style={{
+                                y: proj2Y,
+                                flex: hoveredProject === 1 ? '1.8' : hoveredProject !== null ? '0.7' : '1',
+                                transition: 'flex 0.45s cubic-bezier(0.4,0,0.2,1)',
+                                minWidth: 0, overflow: 'hidden'
+                            }}
                             initial={{ y: 60, opacity: 0 }}
                             whileInView={{ y: 0, opacity: 1 }}
                             transition={{ duration: 0.6, ease: 'easeOut', delay: 0.1 }}
                             viewport={{ once: false, amount: 0.2 }}
+                            onMouseEnter={() => setHoveredProject(1)}
+                            onMouseLeave={() => setHoveredProject(null)}
                         >
                             <div className="group rounded-3xl overflow-hidden relative transition-all duration-500 h-full" style={{ background: 'rgba(130,138,127,0.05)', border: '1px solid rgba(130,138,127,0.2)' }}>
                                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: 'linear-gradient(to top, rgba(130,138,127,0.07), transparent)' }}></div>
@@ -197,11 +206,18 @@ function App() {
 
                         {/* Project 3 */}
                         <motion.div
-                            style={{ y: proj3Y }}
+                            style={{
+                                y: proj3Y,
+                                flex: hoveredProject === 2 ? '1.8' : hoveredProject !== null ? '0.7' : '1',
+                                transition: 'flex 0.45s cubic-bezier(0.4,0,0.2,1)',
+                                minWidth: 0, overflow: 'hidden'
+                            }}
                             initial={{ y: 60, opacity: 0 }}
                             whileInView={{ y: 0, opacity: 1 }}
                             transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
                             viewport={{ once: false, amount: 0.2 }}
+                            onMouseEnter={() => setHoveredProject(2)}
+                            onMouseLeave={() => setHoveredProject(null)}
                         >
                             <div className="group rounded-3xl overflow-hidden relative transition-all duration-500 h-full" style={{ background: 'rgba(130,138,127,0.05)', border: '1px solid rgba(130,138,127,0.2)' }}>
                                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: 'linear-gradient(to top, rgba(130,138,127,0.07), transparent)' }}></div>

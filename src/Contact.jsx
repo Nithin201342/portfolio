@@ -1,6 +1,15 @@
 import { useRef } from 'react';
-import { Mail, Phone, MapPin } from 'lucide-react';
+import { Mail, Phone, MapPin, Github } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+
+// LinkedIn SVG icon (not in lucide-react)
+const LinkedInIcon = ({ size = 32, color = '#828A7F' }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+        <rect x="2" y="9" width="4" height="12" />
+        <circle cx="4" cy="4" r="2" />
+    </svg>
+);
 
 const Contact = () => {
     const sectionRef = useRef(null);
@@ -8,19 +17,20 @@ const Contact = () => {
         target: sectionRef,
         offset: ['start end', 'end start']
     });
-    // Subtle upward parallax for the whole section content
     const sectionY = useTransform(scrollYProgress, [0, 1], [50, -50]);
 
     const contacts = [
         { href: 'mailto:nithinmt07@gmail.com', Icon: Mail, label: 'nithinmt07@gmail.com', isLink: true },
         { href: 'tel:+919400737266', Icon: Phone, label: '+91 9400737266', isLink: true },
         { href: null, Icon: MapPin, label: 'Kerala, India', isLink: false },
+        { href: 'https://github.com/Nithin201342', Icon: Github, label: 'github.com/Nithin201342', isLink: true },
+        { href: 'https://www.linkedin.com/in/nithin-mathew-thomas', Icon: LinkedInIcon, label: 'nithin-mathew-thomas', isLink: true },
     ];
 
     return (
         <div className="max-w-4xl mx-auto text-center py-20" ref={sectionRef}>
             <motion.div style={{ y: sectionY }}>
-                {/* Heading — fades and rises up */}
+                {/* Heading */}
                 <motion.div
                     initial={{ y: 40, opacity: 0 }}
                     whileInView={{ y: 0, opacity: 1 }}
@@ -38,8 +48,8 @@ const Contact = () => {
                     </p>
                 </motion.div>
 
-                {/* Contact items — stagger up on enter, reverse on exit */}
-                <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12">
+                {/* All contact items in a single row — equal spacing via grid */}
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-y-8 gap-x-6 w-full max-w-3xl mx-auto">
                     {contacts.map(({ href, Icon, label, isLink }, i) => {
                         const Wrapper = isLink ? 'a' : 'div';
                         return (
@@ -47,18 +57,17 @@ const Contact = () => {
                                 key={label}
                                 initial={{ y: 50, opacity: 0 }}
                                 whileInView={{ y: 0, opacity: 1 }}
-                                transition={{ duration: 0.55, ease: 'easeOut', delay: i * 0.12 }}
+                                transition={{ duration: 0.55, ease: 'easeOut', delay: i * 0.1 }}
                                 viewport={{ once: false, amount: 0.4 }}
-                                className="w-full md:w-auto"
                             >
                                 <Wrapper
-                                    {...(isLink ? { href } : {})}
+                                    {...(isLink ? { href, target: '_blank', rel: 'noopener noreferrer' } : {})}
                                     className="flex flex-col items-center group"
                                 >
-                                    <div className="w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-300 mb-4 group-hover:scale-110" style={{ background: 'rgba(130,138,127,0.08)', border: '1px solid rgba(130,138,127,0.25)' }}>
-                                        <Icon className="w-8 h-8 transition-colors" style={{ color: '#828A7F' }} />
+                                    <div className="w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300 mb-3 group-hover:scale-110" style={{ background: 'rgba(130,138,127,0.08)', border: '1px solid rgba(130,138,127,0.25)' }}>
+                                        <Icon size={28} className="transition-colors" style={{ color: '#828A7F' }} />
                                     </div>
-                                    <span className="font-medium text-lg" style={{ color: '#828A7F' }}>{label}</span>
+                                    <span className="font-medium text-sm" style={{ color: '#828A7F' }}>{label}</span>
                                 </Wrapper>
                             </motion.div>
                         );
