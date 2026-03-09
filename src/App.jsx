@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion'
+import { useRef } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import HeroScrollAnimation from './HeroScrollAnimation'
 import Navbar from './Navbar'
 import Contact from './Contact'
@@ -8,6 +9,25 @@ import WorkExperience from './WorkExperience'
 import { Rocket, Trophy, Code, Award } from 'lucide-react'
 
 function App() {
+
+    // About section parallax refs
+    const aboutRef = useRef(null);
+    const { scrollYProgress: aboutProgress } = useScroll({
+        target: aboutRef,
+        offset: ['start end', 'end start']
+    });
+    const aboutTextY = useTransform(aboutProgress, [0, 1], [60, -60]);
+    const aboutCardsY = useTransform(aboutProgress, [0, 1], [40, -40]);
+
+    // Projects section parallax
+    const projectsRef = useRef(null);
+    const { scrollYProgress: projectsProgress } = useScroll({
+        target: projectsRef,
+        offset: ['start end', 'end start']
+    });
+    const proj1Y = useTransform(projectsProgress, [0, 1], [70, -70]);
+    const proj2Y = useTransform(projectsProgress, [0, 1], [50, -50]);
+    const proj3Y = useTransform(projectsProgress, [0, 1], [30, -30]);
 
     return (
         <div className="min-h-screen" style={{ backgroundColor: '#ffffff', color: '#828A7F' }}>
@@ -30,15 +50,15 @@ function App() {
                             zIndex: 0,
                         }} />
                         <div style={{ position: 'relative', zIndex: 1 }}>
-                            <div className="grid md:grid-cols-2 gap-16 items-start">
-                                {/* Left: Text Content — slides in from left */}
+                            <div ref={aboutRef} className="grid md:grid-cols-2 gap-16 items-start">
+                                {/* Left: Text Content — slides in from left, out to left */}
                                 <motion.div
                                     className="space-y-6 text-lg font-light leading-relaxed"
-                                    style={{ color: '#828A7F' }}
+                                    style={{ color: '#828A7F', y: aboutTextY }}
                                     initial={{ x: -80, opacity: 0 }}
                                     whileInView={{ x: 0, opacity: 1 }}
-                                    transition={{ duration: 0.7, ease: 'easeOut' }}
-                                    viewport={{ once: true, amount: 0.2 }}
+                                    transition={{ duration: 0.65, ease: 'easeOut' }}
+                                    viewport={{ once: false, amount: 0.25 }}
                                 >
                                     <p>
                                         I'm an MCA student with a strong passion for <span style={{ color: '#6F7C74', fontWeight: 600 }}>Machine Learning</span> and <span style={{ color: '#6F7C74', fontWeight: 600 }}>Full-Stack Development</span>.
@@ -56,13 +76,14 @@ function App() {
                                     </div>
                                 </motion.div>
 
-                                {/* Right: Stats Grid — slides in from right */}
+                                {/* Right: Stats Grid — slides in from right, out to right */}
                                 <motion.div
                                     className="grid grid-cols-2 gap-6"
+                                    style={{ y: aboutCardsY }}
                                     initial={{ x: 80, opacity: 0 }}
                                     whileInView={{ x: 0, opacity: 1 }}
-                                    transition={{ duration: 0.7, ease: 'easeOut', delay: 0.1 }}
-                                    viewport={{ once: true, amount: 0.2 }}
+                                    transition={{ duration: 0.65, ease: 'easeOut', delay: 0.1 }}
+                                    viewport={{ once: false, amount: 0.25 }}
                                 >
                                     <div className="p-6 rounded-2xl transition-all duration-300 group" style={{ background: 'rgba(130,138,127,0.07)', border: '1px solid rgba(130,138,127,0.2)' }}>
                                         <Rocket className="w-8 h-8 mb-4 group-hover:scale-110 transition-transform" style={{ color: '#828A7F' }} />
@@ -98,7 +119,13 @@ function App() {
 
                 {/* Projects Section */}
                 <SectionWrapper id="projects">
-                    <div className="text-center mb-16">
+                    <motion.div
+                        className="text-center mb-16"
+                        initial={{ y: 40, opacity: 0 }}
+                        whileInView={{ y: 0, opacity: 1 }}
+                        transition={{ duration: 0.6, ease: 'easeOut' }}
+                        viewport={{ once: false, amount: 0.3 }}
+                    >
                         <span style={{ color: '#828A7F', fontFamily: '"Saira", sans-serif', fontSize: '0.8rem', letterSpacing: '0.12em', textTransform: 'uppercase', background: 'rgba(130,138,127,0.1)', padding: '4px 14px', borderRadius: '999px', border: '1px solid rgba(130,138,127,0.3)' }}>
                             Portfolio
                         </span>
@@ -106,73 +133,96 @@ function App() {
                             Featured <span style={{ opacity: 0.5 }}>Projects</span>
                         </h2>
                         <div className="h-px w-24 mx-auto rounded-full" style={{ background: '#828A7F', opacity: 0.3 }}></div>
-                    </div>
+                    </motion.div>
 
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div ref={projectsRef} className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
 
                         {/* Project 1 */}
-                        <div className="group rounded-3xl overflow-hidden relative transition-all duration-500" style={{ background: 'rgba(130,138,127,0.05)', border: '1px solid rgba(130,138,127,0.2)' }}>
-                            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: 'linear-gradient(to top, rgba(130,138,127,0.07), transparent)' }}></div>
-                            <div className="p-8 h-full flex flex-col relative z-10">
-                                <div className="mb-6 flex justify-between items-start">
-                                    <h3 className="text-2xl font-bold transition-colors" style={{ color: '#6F7C74', fontFamily: '"Barlow Condensed", sans-serif', fontWeight: 700 }}>Helio: Smart Diet Planner</h3>
-                                    <span className="text-xs px-3 py-1 rounded-full" style={{ color: '#828A7F', background: 'rgba(130,138,127,0.1)', border: '1px solid rgba(130,138,127,0.3)' }}>ML/AI</span>
+                        <motion.div
+                            style={{ y: proj1Y }}
+                            initial={{ y: 60, opacity: 0 }}
+                            whileInView={{ y: 0, opacity: 1 }}
+                            transition={{ duration: 0.6, ease: 'easeOut' }}
+                            viewport={{ once: false, amount: 0.2 }}
+                            className="group rounded-3xl overflow-hidden relative transition-all duration-500"
+                        // style prop can't have y twice, so merge:
+                        >
+                            <div className="group rounded-3xl overflow-hidden relative transition-all duration-500 h-full" style={{ background: 'rgba(130,138,127,0.05)', border: '1px solid rgba(130,138,127,0.2)' }}>
+                                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: 'linear-gradient(to top, rgba(130,138,127,0.07), transparent)' }}></div>
+                                <div className="p-8 h-full flex flex-col relative z-10">
+                                    <div className="mb-6 flex justify-between items-start">
+                                        <h3 className="text-2xl font-bold transition-colors" style={{ color: '#6F7C74', fontFamily: '"Barlow Condensed", sans-serif', fontWeight: 700 }}>Helio: Smart Diet Planner</h3>
+                                        <span className="text-xs px-3 py-1 rounded-full" style={{ color: '#828A7F', background: 'rgba(130,138,127,0.1)', border: '1px solid rgba(130,138,127,0.3)' }}>ML/AI</span>
+                                    </div>
+                                    <p className="mb-6 flex-grow leading-relaxed text-sm" style={{ color: '#828A7F' }}>
+                                        Smart Diet Planner generating personalized diet and exercise plans based on user health data using predictive models.
+                                    </p>
+                                    <div className="flex flex-wrap gap-2 mb-6">
+                                        <span className="text-xs px-2 py-1 rounded" style={{ color: '#828A7F', background: 'rgba(130,138,127,0.08)' }}>Python</span>
+                                        <span className="text-xs px-2 py-1 rounded" style={{ color: '#828A7F', background: 'rgba(130,138,127,0.08)' }}>MongoDB</span>
+                                    </div>
+                                    <a href="https://github.com/Nithin201342/SmartDiet_Planner" target="_blank" rel="noopener noreferrer" className="w-full py-3 rounded-xl font-medium text-center transition-all duration-300" style={{ background: 'rgba(130,138,127,0.1)', color: '#6F7C74', border: '1px solid rgba(130,138,127,0.3)' }}>
+                                        View Project
+                                    </a>
                                 </div>
-                                <p className="mb-6 flex-grow leading-relaxed text-sm" style={{ color: '#828A7F' }}>
-                                    Smart Diet Planner generating personalized diet and exercise plans based on user health data using predictive models.
-                                </p>
-                                <div className="flex flex-wrap gap-2 mb-6">
-                                    <span className="text-xs px-2 py-1 rounded" style={{ color: '#828A7F', background: 'rgba(130,138,127,0.08)' }}>Python</span>
-                                    <span className="text-xs px-2 py-1 rounded" style={{ color: '#828A7F', background: 'rgba(130,138,127,0.08)' }}>MongoDB</span>
-                                </div>
-                                <a href="#" className="w-full py-3 rounded-xl font-medium text-center transition-all duration-300" style={{ background: 'rgba(130,138,127,0.1)', color: '#6F7C74', border: '1px solid rgba(130,138,127,0.3)' }}>
-                                    View Project
-                                </a>
-                            </div>
-                        </div>
+                            </div></motion.div>
 
                         {/* Project 2 */}
-                        <div className="group rounded-3xl overflow-hidden relative transition-all duration-500" style={{ background: 'rgba(130,138,127,0.05)', border: '1px solid rgba(130,138,127,0.2)' }}>
-                            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: 'linear-gradient(to top, rgba(130,138,127,0.07), transparent)' }}></div>
-                            <div className="p-8 h-full flex flex-col relative z-10">
-                                <div className="mb-6 flex justify-between items-start">
-                                    <h3 className="text-2xl font-bold transition-colors" style={{ color: '#6F7C74', fontFamily: '"Barlow Condensed", sans-serif', fontWeight: 700 }}>Smart Audio Validator</h3>
-                                    <span className="text-xs px-3 py-1 rounded-full" style={{ color: '#828A7F', background: 'rgba(130,138,127,0.1)', border: '1px solid rgba(130,138,127,0.3)' }}>AI/DSP</span>
+                        <motion.div
+                            style={{ y: proj2Y }}
+                            initial={{ y: 60, opacity: 0 }}
+                            whileInView={{ y: 0, opacity: 1 }}
+                            transition={{ duration: 0.6, ease: 'easeOut', delay: 0.1 }}
+                            viewport={{ once: false, amount: 0.2 }}
+                        >
+                            <div className="group rounded-3xl overflow-hidden relative transition-all duration-500 h-full" style={{ background: 'rgba(130,138,127,0.05)', border: '1px solid rgba(130,138,127,0.2)' }}>
+                                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: 'linear-gradient(to top, rgba(130,138,127,0.07), transparent)' }}></div>
+                                <div className="p-8 h-full flex flex-col relative z-10">
+                                    <div className="mb-6 flex justify-between items-start">
+                                        <h3 className="text-2xl font-bold transition-colors" style={{ color: '#6F7C74', fontFamily: '"Barlow Condensed", sans-serif', fontWeight: 700 }}>Smart Audio Validator</h3>
+                                        <span className="text-xs px-3 py-1 rounded-full" style={{ color: '#828A7F', background: 'rgba(130,138,127,0.1)', border: '1px solid rgba(130,138,127,0.3)' }}>AI/DSP</span>
+                                    </div>
+                                    <p className="mb-6 flex-grow leading-relaxed text-sm" style={{ color: '#828A7F' }}>
+                                        AI-based system evaluating audio quality using digital signal processing and machine learning to extract advanced features.
+                                    </p>
+                                    <div className="flex flex-wrap gap-2 mb-6">
+                                        <span className="text-xs px-2 py-1 rounded" style={{ color: '#828A7F', background: 'rgba(130,138,127,0.08)' }}>Python</span>
+                                        <span className="text-xs px-2 py-1 rounded" style={{ color: '#828A7F', background: 'rgba(130,138,127,0.08)' }}>Librosa</span>
+                                    </div>
+                                    <a href="https://github.com/Nithin201342/smart_audio_validator" target="_blank" rel="noopener noreferrer" className="w-full py-3 rounded-xl font-medium text-center transition-all duration-300" style={{ background: 'rgba(130,138,127,0.1)', color: '#6F7C74', border: '1px solid rgba(130,138,127,0.3)' }}>
+                                        View Project
+                                    </a>
                                 </div>
-                                <p className="mb-6 flex-grow leading-relaxed text-sm" style={{ color: '#828A7F' }}>
-                                    AI-based system evaluating audio quality using digital signal processing and machine learning to extract advanced features.
-                                </p>
-                                <div className="flex flex-wrap gap-2 mb-6">
-                                    <span className="text-xs px-2 py-1 rounded" style={{ color: '#828A7F', background: 'rgba(130,138,127,0.08)' }}>Python</span>
-                                    <span className="text-xs px-2 py-1 rounded" style={{ color: '#828A7F', background: 'rgba(130,138,127,0.08)' }}>Librosa</span>
-                                </div>
-                                <a href="#" className="w-full py-3 rounded-xl font-medium text-center transition-all duration-300" style={{ background: 'rgba(130,138,127,0.1)', color: '#6F7C74', border: '1px solid rgba(130,138,127,0.3)' }}>
-                                    View Project
-                                </a>
-                            </div>
-                        </div>
+                            </div></motion.div>
 
                         {/* Project 3 */}
-                        <div className="group rounded-3xl overflow-hidden relative transition-all duration-500" style={{ background: 'rgba(130,138,127,0.05)', border: '1px solid rgba(130,138,127,0.2)' }}>
-                            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: 'linear-gradient(to top, rgba(130,138,127,0.07), transparent)' }}></div>
-                            <div className="p-8 h-full flex flex-col relative z-10">
-                                <div className="mb-6 flex justify-between items-start">
-                                    <h3 className="text-2xl font-bold transition-colors" style={{ color: '#6F7C74', fontFamily: '"Barlow Condensed", sans-serif', fontWeight: 700 }}>Fitness Equipments Shop</h3>
-                                    <span className="text-xs px-3 py-1 rounded-full" style={{ color: '#828A7F', background: 'rgba(130,138,127,0.1)', border: '1px solid rgba(130,138,127,0.3)' }}>Web</span>
+                        <motion.div
+                            style={{ y: proj3Y }}
+                            initial={{ y: 60, opacity: 0 }}
+                            whileInView={{ y: 0, opacity: 1 }}
+                            transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
+                            viewport={{ once: false, amount: 0.2 }}
+                        >
+                            <div className="group rounded-3xl overflow-hidden relative transition-all duration-500 h-full" style={{ background: 'rgba(130,138,127,0.05)', border: '1px solid rgba(130,138,127,0.2)' }}>
+                                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: 'linear-gradient(to top, rgba(130,138,127,0.07), transparent)' }}></div>
+                                <div className="p-8 h-full flex flex-col relative z-10">
+                                    <div className="mb-6 flex justify-between items-start">
+                                        <h3 className="text-2xl font-bold transition-colors" style={{ color: '#6F7C74', fontFamily: '"Barlow Condensed", sans-serif', fontWeight: 700 }}>Online Used Phones Store</h3>
+                                        <span className="text-xs px-3 py-1 rounded-full" style={{ color: '#828A7F', background: 'rgba(130,138,127,0.1)', border: '1px solid rgba(130,138,127,0.3)' }}>Web</span>
+                                    </div>
+                                    <p className="mb-6 flex-grow leading-relaxed text-sm" style={{ color: '#828A7F' }}>
+                                        Full-stack e-commerce platform where users can browse, list, and purchase second-hand smartphones with product listings, filters, and a checkout flow.
+                                    </p>
+                                    <div className="flex flex-wrap gap-2 mb-6">
+                                        <span className="text-xs px-2 py-1 rounded" style={{ color: '#828A7F', background: 'rgba(130,138,127,0.08)' }}>PHP</span>
+                                        <span className="text-xs px-2 py-1 rounded" style={{ color: '#828A7F', background: 'rgba(130,138,127,0.08)' }}>MySQL</span>
+                                        <span className="text-xs px-2 py-1 rounded" style={{ color: '#828A7F', background: 'rgba(130,138,127,0.08)' }}>JS</span>
+                                    </div>
+                                    <a href="https://github.com/Nithin201342/used_phones_store" target="_blank" rel="noopener noreferrer" className="w-full py-3 rounded-xl font-medium text-center transition-all duration-300" style={{ background: 'rgba(130,138,127,0.1)', color: '#6F7C74', border: '1px solid rgba(130,138,127,0.3)' }}>
+                                        View Project
+                                    </a>
                                 </div>
-                                <p className="mb-6 flex-grow leading-relaxed text-sm" style={{ color: '#828A7F' }}>
-                                    Full-stack e-commerce web application for fitness equipment with cart, checkout, and admin panel functionality.
-                                </p>
-                                <div className="flex flex-wrap gap-2 mb-6">
-                                    <span className="text-xs px-2 py-1 rounded" style={{ color: '#828A7F', background: 'rgba(130,138,127,0.08)' }}>PHP</span>
-                                    <span className="text-xs px-2 py-1 rounded" style={{ color: '#828A7F', background: 'rgba(130,138,127,0.08)' }}>MySQL</span>
-                                    <span className="text-xs px-2 py-1 rounded" style={{ color: '#828A7F', background: 'rgba(130,138,127,0.08)' }}>JS</span>
-                                </div>
-                                <a href="#" className="w-full py-3 rounded-xl font-medium text-center transition-all duration-300" style={{ background: 'rgba(130,138,127,0.1)', color: '#6F7C74', border: '1px solid rgba(130,138,127,0.3)' }}>
-                                    View Project
-                                </a>
-                            </div>
-                        </div>
+                            </div></motion.div>
 
                     </div>
                 </SectionWrapper>

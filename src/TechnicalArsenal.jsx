@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 const SkillBar = ({ name, level }) => (
     <div className="mb-6">
@@ -22,6 +22,17 @@ const SkillBar = ({ name, level }) => (
 );
 
 const TechnicalArsenal = () => {
+    const sectionRef = useRef(null);
+    const { scrollYProgress } = useScroll({
+        target: sectionRef,
+        offset: ['start end', 'end start']
+    });
+    // Each card floats at a slightly different rate for depth
+    const card1Y = useTransform(scrollYProgress, [0, 1], [60, -60]);
+    const card2Y = useTransform(scrollYProgress, [0, 1], [40, -40]);
+    const card3Y = useTransform(scrollYProgress, [0, 1], [20, -20]);
+    const cardYValues = [card1Y, card2Y, card3Y];
+
     const skills = {
         Frontend: [
             { name: 'React.js', level: 90 },
@@ -44,8 +55,15 @@ const TechnicalArsenal = () => {
     };
 
     return (
-        <section id="skills" className="py-20">
-            <div className="text-center mb-16">
+        <section id="skills" className="py-20" ref={sectionRef}>
+            {/* Heading — fades up on enter, fades back on exit */}
+            <motion.div
+                className="text-center mb-16"
+                initial={{ y: 40, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.6, ease: 'easeOut' }}
+                viewport={{ once: false, amount: 0.3 }}
+            >
                 <span style={{ color: '#828A7F', fontFamily: '"Saira", sans-serif', fontSize: '0.8rem', letterSpacing: '0.12em', textTransform: 'uppercase', background: 'rgba(130,138,127,0.1)', padding: '4px 14px', borderRadius: '999px', border: '1px solid rgba(130,138,127,0.3)' }}>
                     Skills
                 </span>
@@ -53,18 +71,29 @@ const TechnicalArsenal = () => {
                     Technical <span style={{ opacity: 0.5 }}>Skills</span>
                 </h2>
                 <div className="h-px w-24 mx-auto rounded-full" style={{ background: '#828A7F', opacity: 0.3 }}></div>
-            </div>
+            </motion.div>
 
             <div className="grid md:grid-cols-3 gap-12">
-                {Object.entries(skills).map(([category, items]) => (
-                    <div key={category} className="p-8 rounded-3xl transition-all duration-300" style={{ background: 'rgba(130,138,127,0.05)', border: '1px solid rgba(130,138,127,0.18)' }}>
-                        <h3 className="text-2xl font-bold mb-8 pl-4" style={{ color: '#6F7C74', fontFamily: '"Barlow Condensed", sans-serif', fontWeight: 700, borderLeft: '4px solid #6F7C74' }}>{category}</h3>
-                        <div>
-                            {items.map((skill) => (
-                                <SkillBar key={skill.name} name={skill.name} level={skill.level} />
-                            ))}
+                {Object.entries(skills).map(([category, items], i) => (
+                    <motion.div
+                        key={category}
+                        style={{ y: cardYValues[i] }}
+                        initial={{ y: 60, opacity: 0 }}
+                        whileInView={{ y: 0, opacity: 1 }}
+                        transition={{ duration: 0.65, ease: 'easeOut', delay: i * 0.12 }}
+                        viewport={{ once: false, amount: 0.2 }}
+                        className="p-8 rounded-3xl transition-all duration-300"
+                    // Inline background + border via a wrapper to avoid style conflict
+                    >
+                        <div className="h-full" style={{ background: 'rgba(130,138,127,0.05)', border: '1px solid rgba(130,138,127,0.18)', borderRadius: '1.5rem', padding: '2rem' }}>
+                            <h3 className="text-2xl font-bold mb-8 pl-4" style={{ color: '#6F7C74', fontFamily: '"Barlow Condensed", sans-serif', fontWeight: 700, borderLeft: '4px solid #6F7C74' }}>{category}</h3>
+                            <div>
+                                {items.map((skill) => (
+                                    <SkillBar key={skill.name} name={skill.name} level={skill.level} />
+                                ))}
+                            </div>
                         </div>
-                    </div>
+                    </motion.div>
                 ))}
             </div>
         </section>
